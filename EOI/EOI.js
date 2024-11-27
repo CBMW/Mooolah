@@ -1,9 +1,19 @@
-function EOI({ setShowPopup }) { // Accept setShowPopup as a prop
+import React, { useState, useEffect } from "react";
+import "../css/EOI.css";
+
+function EOI({ setShowPopup }) {
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
     email: "",
   });
+
+  useEffect(() => {
+    console.log("EOI component mounted");
+    return () => {
+      console.log("EOI component unmounted");
+    };
+  }, []);
 
   // Handle input changes
   const handleChange = (e) => {
@@ -12,25 +22,14 @@ function EOI({ setShowPopup }) { // Accept setShowPopup as a prop
       ...prevData,
       [name]: value,
     }));
+    console.log(`Field updated: ${name} = ${value}`);
   };
 
-  // Handle submit
-  const handleSubmit = async () => {
-    try {
-      // Insert the data into the EOI table
-      const { error } = await supabase.from("EOI").insert([formData]);
-
-      if (error) {
-        console.error("Error inserting data:", error.message);
-      } else {
-        alert("Expression of interest submitted successfully!");
-      }
-
-      // Close the popup
-      setShowPopup(false);
-    } catch (err) {
-      console.error("Error:", err);
-    }
+  // Mock handle submit
+  const handleSubmit = () => {
+    console.log("Form submitted with data:", formData);
+    alert("Expression of interest submitted successfully!");
+    setShowPopup(false);
   };
 
   return (
@@ -69,7 +68,7 @@ function EOI({ setShowPopup }) { // Accept setShowPopup as a prop
         </div>
       </div>
     </div>
-  );
+  );  
 }
 
 export default EOI;
