@@ -2,38 +2,60 @@ import React, { useState, useEffect } from "react";
 import "../css/EOI.css";
 
 function EOI({ setShowPopup }) {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    // Trigger fade-in effect and add blur to the background content
+    setIsVisible(true);
+    const background = document.getElementById("blur-content");
+    if (background) {
+      background.classList.add("blur-background");
+    }
+
+    return () => {
+      // Remove blur when popup is closed
+      if (background) {
+        background.classList.remove("blur-background");
+      }
+    };
+  }, []);
+
+  const closePopup = () => {
+    setIsVisible(false); // Trigger fade-out animation
+    setTimeout(() => setShowPopup(false), 300); // Wait for fade-out effect
+  };
+
+  const handleOverlayClick = (e) => {
+    if (e.target.className.includes("eoi-overlay")) {
+      closePopup(); // Close popup when clicking outside
+    }
+  };
+
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
     email: "",
   });
 
-  useEffect(() => {
-    console.log("EOI component mounted");
-    return () => {
-      console.log("EOI component unmounted");
-    };
-  }, []);
-
-  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-    console.log(`Field updated: ${name} = ${value}`);
   };
 
-  // Mock handle submit
   const handleSubmit = () => {
     console.log("Form submitted with data:", formData);
     alert("Expression of interest submitted successfully!");
-    setShowPopup(false);
+    closePopup();
   };
 
   return (
-    <div className="eoi-overlay">
+    <div
+      className={`eoi-overlay ${isVisible ? "fade-in" : "fade-out"}`}
+      onClick={handleOverlayClick}
+    >
       <div className="eoi-popup">
         <h2>Expression of Interest</h2>
         <form>
@@ -64,11 +86,11 @@ function EOI({ setShowPopup }) {
         </form>
         <div className="eoi-buttons">
           <button onClick={handleSubmit}>Submit</button>
-          <button onClick={() => setShowPopup(false)}>Close</button>
+          <button onClick={closePopup}>Close</button>
         </div>
       </div>
     </div>
-  );  
+  );
 }
 
 export default EOI;
