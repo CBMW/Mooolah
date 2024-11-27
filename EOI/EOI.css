@@ -1,65 +1,55 @@
-.eoi-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .eoi-popup {
-    background-color: #ffffff;
-    border-radius: 8px;
-    width: 400px;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  .eoi-popup h2 {
-    color: #007bff;
-    margin-bottom: 20px;
-  }
-  
-  .eoi-popup form input {
-    width: 90%;
-    margin-bottom: 15px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-  
-  .eoi-buttons {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .eoi-buttons button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .eoi-buttons button:first-child {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .eoi-buttons button:first-child:hover {
-    background-color: #0056b3;
-  }
-  
-  .eoi-buttons button:last-child {
-    background-color: #f5f5f5;
-    color: #333;
-  }
-  
-  .eoi-buttons button:last-child:hover {
-    background-color: #e0e0e0;
-  }
-  
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { scroller } from "react-scroll"; // React Scroll for smooth scrolling
+
+import Hero from "../components/Hero";
+import EdgeSection from "../components/EdgeSection";
+import Features from "../components/Features";
+import Pricing from "../components/Pricing";
+import Footer from "../components/Footer";
+import EOI from "../components/EOI"; 
+import "../css/EOI.css"; 
+
+function LandingPage() {
+  const [showEOI, setShowEOI] = useState(false); // State to control the EOI popup visibility
+  const location = useLocation();
+
+  // Handle URL parameters for scrolling to sections
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const section = params.get("section");
+
+    if (section) {
+      // Smooth scroll to the specified section
+      scroller.scrollTo(section, {
+        duration: 800,
+        smooth: "easeInOutQuart",
+      });
+    }
+  }, [location]);
+
+  // Show the EOI popup after 5 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowEOI(true);
+    }, 5000);
+
+    // Cleanup the timer when the component unmounts
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <>
+      <div className={`landing-container ${showEOI ? "blur-background" : ""}`}>
+        <Hero />
+        <EdgeSection />
+        <Features id="features" />
+        <Pricing id="pricing" />
+        <Footer />
+      </div>
+      {showEOI && <EOI setShowPopup={setShowEOI} />} {/* Render EOI popup separately */}
+    </>
+  );
+}
+
+export default LandingPage;
