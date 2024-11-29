@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { scroller } from "react-scroll"; // React Scroll for smooth scrolling
-
 import Hero from "../components/Hero";
 import EdgeSection from "../components/EdgeSection";
 import Features from "../components/Features";
