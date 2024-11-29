@@ -12,11 +12,28 @@ function EOI({ setShowPopup }) {
       background.classList.add("blur-background");
     }
 
+    // Prevent background scrolling
+    document.body.style.overflow = 'hidden';
+
+    // Add event listener for Escape key to close the popup
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        closePopup();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+
     return () => {
       // Remove blur when popup is closed
       if (background) {
         background.classList.remove("blur-background");
       }
+
+      // Re-enable background scrolling
+      document.body.style.overflow = 'auto';
+
+      // Remove event listener
+      document.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
 
@@ -31,9 +48,9 @@ function EOI({ setShowPopup }) {
     }
   };
 
+  // Updated formData without 'last_name'
   const [formData, setFormData] = useState({
     first_name: "",
-    last_name: "",
     email: "",
   });
 
@@ -45,7 +62,8 @@ function EOI({ setShowPopup }) {
     }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent form from refreshing the page
     console.log("Form submitted with data:", formData);
     alert("Expression of interest submitted successfully!");
     closePopup();
@@ -55,10 +73,22 @@ function EOI({ setShowPopup }) {
     <div
       className={`eoi-overlay ${isVisible ? "fade-in" : "fade-out"}`}
       onClick={handleOverlayClick}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="eoi-title"
     >
       <div className="eoi-popup">
-        <h2>Expression of Interest</h2>
-        <form>
+        {/* X Button */}
+        <button
+          className="eoi-close-button"
+          onClick={closePopup}
+          aria-label="Close"
+        >
+          &times;
+        </button>
+
+        <h2 id="eoi-title">Expression of Interest</h2>
+        <form onSubmit={handleSubmit}>
           <input
             type="text"
             name="first_name"
@@ -67,14 +97,7 @@ function EOI({ setShowPopup }) {
             onChange={handleChange}
             required
           />
-          <input
-            type="text"
-            name="last_name"
-            placeholder="Last Name"
-            value={formData.last_name}
-            onChange={handleChange}
-            required
-          />
+          {/* Removed Last Name Field */}
           <input
             type="email"
             name="email"
@@ -83,11 +106,11 @@ function EOI({ setShowPopup }) {
             onChange={handleChange}
             required
           />
+          {/* Centered Submit Button */}
+          <div className="eoi-submit-container">
+            <button type="submit" className="eoi-submit-button">Submit</button>
+          </div>
         </form>
-        <div className="eoi-buttons">
-          <button onClick={handleSubmit}>Submit</button>
-          <button onClick={closePopup}>Close</button>
-        </div>
       </div>
     </div>
   );
