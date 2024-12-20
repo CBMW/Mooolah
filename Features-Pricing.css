@@ -1,0 +1,283 @@
+/* Card Container */
+.pricing-card.recommended {
+    position: relative;
+    width: 300px; /* Adjust to your desired card width */
+    height: 400px; /* Adjust to your desired card height */
+    border-radius: 14px;
+    z-index: 1111;
+    overflow: hidden; /* Ensure the blob doesn't spill out of the card */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #1d1d1d; /* Matches other card backgrounds */
+    box-shadow: 10px 10px 20px #141414, -10px -10px 20px #222;
+    text-align: center;
+    color: #e0e0e0;
+}
+
+/* Background Layer */
+.pricing-card.recommended .bg {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: calc(100% - 10px); /* Maintain the border effect */
+    height: calc(100% - 10px);
+    z-index: 2;
+    background: rgba(29, 29, 29, 0.95); /* Matches other cards */
+    border-radius: 14px;
+    pointer-events: none; /* Ensure it's not interactive */
+    outline: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Glowing Blob */
+.pricing-card.recommended .blob {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    width: 300px; /* Ensure the blob spans the card width */
+    height: 400px; /* Ensure the blob spans the card height */
+    border-radius: 50%; /* Circular glow effect */
+    background-color: #1CA733; /* Your green color */
+    opacity: 0.7; /* Slightly dimmed intensity */
+    filter: blur(25px); /* Smooth glow effect */
+    animation: blob-bounce 5s infinite ease; /* Movement animation */
+}
+
+/* Keyframes for Blob Animation */
+@keyframes blob-bounce {
+    0% {
+        transform: translate(-120%, -120%);
+    }
+
+    25% {
+        transform: translate(20%, -120%);
+    }
+
+    50% {
+        transform: translate(20%, 20%);
+    }
+
+    75% {
+        transform: translate(-120%, 20%);
+    }
+
+    100% {
+        transform: translate(-120%, -120%);
+    }
+}
+
+.pricing-card.recommended strong {
+    color: #a0e4b0 !important; /* Ensure visibility with a bright color */
+    font-size: 20px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+    position: relative; /* Ensure it's above the background and blob layers */
+    z-index: 4; /* Place it above the blob and bg layers */
+}
+
+/* Recommended Badge */
+.pricing-card.recommended::before {
+    content: "Recommended";
+    position: absolute;
+    top: -10px; /* Adjust position to align with the design */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333; /* Dark background for contrast */
+    color: white; /* Bright text for readability */
+    padding: 5px 15px; /* Add more horizontal padding for the design */
+    border-radius: 16px; /* Rounded corners to match the style */
+    font-size: 14px; /* Slightly larger font size */
+    font-weight: bold; /* Make the text stand out */
+    z-index: 5; /* Ensure it stays above all elements */
+    box-shadow: 0 0 5px rgba(0, 255, 0, 0.5); /* Soft green glow for emphasis */
+    border: 1px solid #a0e4b0; /* Light green border to match the theme */
+}
+.pricing-card p {
+    font-size: 16px; /* Match other cards' font size */
+    color: #666; /* Set to the same light grey color as the other cards */
+    margin-bottom: 20px; /* Maintain consistent spacing */
+    text-align: center; /* Ensure text alignment consistency */
+}
+
+.pricing-card.recommended p {
+    color: #666 !important; /* Override any specific color for the recommended card */
+}
+
+.pricing-card h3 {
+    font-size: 24px; /* Consistent size for all headings */
+    font-weight: bold; /* Consistent weight for all headings */
+    color: #a0e4b0; /* Bright green color to match "Weekly" and "Yearly" */
+    margin-bottom: 10px; /* Consistent spacing */
+}
+
+.pricing-card.recommended h3 {
+    color: #a0e4b0 !important; /* Ensure the color matches and overrides any other style */
+}
+
+
+/* Glow Card Content */
+.pricing-card.recommended h3,
+.pricing-card.recommended p,
+.pricing-card.recommended ul {
+    position: relative;
+    z-index: 3; /* Ensure card content is above the blob and background */
+    color: #e0e0e0; /* Maintain readability with contrasting text color */
+}
+
+/* Pricing Text (Strong) */
+.pricing-card strong,
+.pricing-card.recommended strong {
+    color: #a0e4b0; /* Bright and visible green text */
+    font-size: 20px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Pricing Button (Sign Up) */
+.pricing-card.recommended .pricing-button {
+    color: #121212; /* Text color for visibility */
+    background-color: #a0e4b0; /* Matches button background of other cards */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    z-index: 4; /* Ensure it stays visible */
+}
+
+.pricing-card.recommended .pricing-button:hover {
+    background-color: #88d497; /* Matches hover effect of other buttons */
+}
+
+/* Features and Pricing Section */
+.features-section, .pricing-section {
+    display: flex;
+    justify-content: flex-start; /* Align items to the start for better scrolling */
+    padding: 20px;
+    gap: 20px;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    flex-wrap: nowrap; /* Prevent wrapping */
+    scroll-snap-type: x mandatory; /* Enable snap scrolling */
+    -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on mobile */
+    max-width: 100vw; /* Ensure the container spans the viewport width */
+}
+
+/* Desktop View */
+.feature-card, .pricing-card {
+    background-color: #1d1d1d; /* Matches other cards */
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 40px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for consistency */
+    text-align: center;
+    color: #e0e0e0;
+    margin-bottom: 30px;
+}
+
+/* Mobile View - Horizontal Scroll */
+@media (max-width: 768px) {
+    .features-section, .pricing-section {
+        display: flex;
+        overflow-x: auto;
+        gap: 15px;
+        padding: 20px; /* Adjusted padding for mobile */
+        scroll-snap-type: x mandatory;
+        flex-wrap: nowrap; /* Prevent wrapping for mobile view */
+        max-width: 100vw; /* Make sure container spans viewport width */
+    }
+
+    .feature-card, .pricing-card {
+        scroll-snap-align: center; /* Align cards in the center when scrolling */
+        width: 80vw; /* Set width to a percentage of the viewport */
+        max-width: none; /* Disable max-width restriction */
+        flex-shrink: 0; /* Prevent cards from shrinking */
+        margin-right: 15px; /* Space between cards */
+    }
+}
+
+.feature-card h3, .pricing-card h3 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #a0e4b0;
+    margin-bottom: 10px;
+}
+
+.feature-card p, .pricing-card p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.feature-button, .pricing-button {
+    padding: 10px 20px;
+    background-color: #a0e4b0;
+    color: #121212;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.feature-button:hover, .pricing-button:hover {
+    background-color: #88d497;
+}
+
+/* Desktop View */
+@media (min-width: 769px) {
+    .features-section, .pricing-section {
+        display: flex;
+        flex-wrap: wrap; /* Enable wrapping for desktop */
+        justify-content: center;
+        padding: 40px 20px;
+        gap: 20px;
+        overflow-x: visible; /* Remove horizontal scrolling on desktop */
+    }
+    
+    .feature-card, .pricing-card {
+        flex: 1 1 300px; /* Allows cards to wrap to fit container width */
+        max-width: 300px;
+        min-width: 250px;
+    }
+}
+/* Remove List Bullets */
+.pricing-card ul {
+    list-style: none; /* Removes the bullet points */
+    padding: 0; /* Removes padding inside the list */
+    margin: 0; /* Ensures no extra space is added to the list */
+}
+
+/* Ensure List Items Stay Properly Styled */
+.pricing-card li {
+    margin: 10px 0; /* Adds vertical spacing between items */
+    color: #e0e0e0; /* Keeps text visible */
+    text-align: center; /* Optional: Adjust text alignment if necessary */
+}
+
+/* Maintain Card Shape */
+.pricing-card {
+    padding: 20px; /* Maintain consistent padding for the card content */
+    box-sizing: border-box; /* Ensures padding doesn't affect card size */
+}
+/* Align Sign-Up Button to Bottom */
+.pricing-card {
+    display: flex; /* Use flexbox for card layout */
+    flex-direction: column; /* Stack content vertically */
+    justify-content: space-between; /* Push content to top and bottom */
+    align-items: center; /* Center align content horizontally */
+    height: 400px; /* Ensure the card height stays consistent */
+    padding: 20px; /* Add padding to keep spacing */
+    box-sizing: border-box; /* Include padding in total height */
+}
+
+.pricing-card .pricing-button {
+    margin-top: auto; /* Push the button to the bottom */
+    align-self: center; /* Center align the button */
+}
